@@ -1,6 +1,6 @@
 /***************************************************************************
  *   fheroes2: https://github.com/ihhub/fheroes2                           *
- *   Copyright (C) 2024 - 2026                                             *
+ *   Copyright (C) 2026                                                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,12 +20,57 @@
 
 #pragma once
 
-#include <cstdint>
-#include <string>
-#include <vector>
+#ifdef TARGET_NINTENDO_3DS
 
-namespace Editor
+#include <cstdio>
+#include <cstdlib>
+
+#include <3ds.h>
+
+namespace CTR
 {
-    bool openSpellSelectionWindow( std::string title, int32_t & spellLevel, std::vector<int32_t> & selectedSpells, const bool isMultiLevelSelectionEnabled,
-                                   const int32_t minimumEnabledSpells, const bool pickDisabledSpells );
+    bool ctr_check_dsp();
+    bool ctr_is_n3ds();
+    void ctr_sys_init();
+
+    bool ctr_check_dsp()
+    {
+        FILE * dsp = fopen( "sdmc:/3ds/dspfirm.cdc", "r" );
+        if ( dsp == nullptr ) {
+            gfxInitDefault();
+            errorConf error;
+            errorInit( &error, ERROR_TEXT, CFG_LANGUAGE_EN );
+            errorText( &error, "Cannot find DSP firmware!\n\n\"sdmc:/3ds/dspfirm.cdc\"\n\nRun \'DSP1\' at least once to\ndump your DSP firmware." );
+            errorDisp( &error );
+            gfxExit();
+            return false;
+        }
+        fclose( dsp );
+        return true;
+    }
+
+    bool ctr_is_n3ds()
+    {
+        bool isN3DS;
+        Result res = APT_CheckNew3DS( &isN3DS );
+        return R_SUCCEEDED( res ) && isN3DS;
+    }
+
+    void ctr_sys_init()
+    {
+        if ( !ctr_check_dsp() ) {
+            exit( 0 );
+        }
+
+        if ( ctr_is_n3ds() ) {
+            osSetSpeedupEnable( true );
+        }
+
+        romfsInit();
+        atexit( []() { romfsExit(); } );
+
+        acInit();
+        atexit( []() { acExit(); } );
+    }
 }
+#endif
