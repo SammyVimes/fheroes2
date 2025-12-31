@@ -97,6 +97,13 @@
 #define be32toh( x ) __bswap32( x )
 #define le32toh( x ) ( x )
 
+#elif defined( TARGET_NINTENDO_3DS )
+#include <sys/endian.h>
+#include <machine/endian.h>
+#define LITTLE_ENDIAN _LITTLE_ENDIAN
+#define BIG_ENDIAN _BIG_ENDIAN
+#define BYTE_ORDER _BYTE_ORDER
+
 #else
 // POSIX 1003.1-2024
 // https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/endian.h.html

@@ -1346,7 +1346,7 @@ Battle::Actions AI::BattlePlanner::archerDecision( Battle::Arena & arena, const 
                                                                } );
 
             if ( !isItWorthTryingToRetreat ) {
-                return static_cast<int32_t>( -1 );
+                return -1;
             }
         }
 

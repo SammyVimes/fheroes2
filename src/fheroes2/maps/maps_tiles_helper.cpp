@@ -2104,7 +2104,7 @@ namespace Maps
         // Add extra 1 to reach the given maxPos point.
         const int32_t maxX = std::min<int32_t>( maxPos.x + 1, worldWidth );
         const int32_t maxY = std::min<int32_t>( maxPos.y + 1, worldHeight );
-        
+
         // Fog data range is 1 tile bigger from each side as for the fog directions we have to check all tiles around each tile in the area.
         const int32_t fogMinX = std::max<int32_t>( minX - 1, 0 );
         const int32_t fogMinY = std::max<int32_t>( minY - 1, 0 );
