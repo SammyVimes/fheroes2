@@ -190,7 +190,6 @@ public:
 
     Artifact( int32_t art = UNKNOWN )
         : id( art > UNKNOWN && art < ARTIFACT_COUNT ? art : UNKNOWN )
-        , ext( 0 )
     {
         // Do nothing.
     }
@@ -268,7 +267,7 @@ private:
     friend IStreamBase & operator>>( IStreamBase & stream, Artifact & art );
 
     int32_t id;
-    int32_t ext;
+    int32_t ext{ 0 };
 };
 
 uint32_t GoldInsteadArtifact( const MP2::MapObjectType objectType );

@@ -455,7 +455,7 @@ int32_t Artifact::Rand( ArtLevel lvl )
         }
     }
 
-    int32_t res = !v.empty() ? Rand::Get( v ) : Artifact::UNKNOWN;
+    const int32_t res = !v.empty() ? Rand::Get( v ) : Artifact::UNKNOWN;
     artifactGlobalStatus[res] |= ART_RNDUSED;
 
     return res;

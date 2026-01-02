@@ -884,7 +884,7 @@ uint32_t Skill::GetNecromancyBonus( const HeroBase & hero )
     const uint32_t shrineCount = world.GetKingdom( hero.GetColor() ).GetCountNecromancyShrineBuild();
     const uint32_t artifactEffect = hero.GetBagArtifacts().isArtifactBonusPresent( fheroes2::ArtifactBonusType::NECROMANCY_SKILL ) ? 1 : 0;
     // cap bonus at 7
-    return std::min<uint32_t>( 7u, shrineCount + artifactEffect );
+    return std::min<uint32_t>( 7U, shrineCount + artifactEffect );
 }
 
 uint32_t Skill::GetNecromancyPercent( const HeroBase & hero )
@@ -892,7 +892,7 @@ uint32_t Skill::GetNecromancyPercent( const HeroBase & hero )
     uint32_t percent = hero.GetSecondarySkillValue( Skill::Secondary::NECROMANCY );
     percent += 10 * GetNecromancyBonus( hero );
     // cap at 100% bonus
-    return std::min<uint32_t>( percent, 100u );
+    return std::min<uint32_t>( percent, 100U );
 }
 
 uint32_t Skill::GetDiplomacySurrenderCostDiscount( const int level )
